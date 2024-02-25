@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .slider-container {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      position: relative;
+      width: 600px;
+      overflow: hidden;
+    }
+    .imag{
+        width: 100%;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-align: center;
+    }
+
+    .slider-buttons {
+      position: absolute;
+      top: 90%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .slider-button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .slider-button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slider-container">
+  <div class="slider-wrapper">
+    <div class="slide">
+      <img class="imag"src="./download1.jpg"alt="Image 1">
+      <div class="text-overlay"></div>
+    </div>
+    <div class="slide">
+      <img class="imag"src="./truck 1.jpeg" alt="Image 2">
+      <div class="text-overlay"></div>
+    </div>
+    <div class="slide">
+      <img class="imag"src="./data admin.jpg" alt="Image 3">
+      <div class="text-overlay"></div>
+    </div>
+  </div>
+
+  <div class="slider-buttons">
+    <button class="slider-button" onclick="prevSlide()">Previous</button>
+    <button class="slider-button" onclick="togglePlayPause()">Play/Pause</button>
+    <button class="slider-button" onclick="nextSlide()">Next</button>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 0;
+  let isPlaying = true;
+  const sliderWrapper = document.querySelector('.slider-wrapper');
+  const slides = document.querySelectorAll('.slide');
+  const playPauseButton = document.querySelector('.slider-buttons button:nth-child(2)');
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlider();
+  }
+
+  function updateSlider() {
+    const translateValue = -currentSlide * 100 + '%';
+    sliderWrapper.style.transform = 'translateX(' + translateValue + ')';
+  }
+
+  function togglePlayPause() {
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+      playPauseButton.textContent = 'Pause';
+      startAutoPlay();
+    } else {
+      playPauseButton.textContent = 'Play';
+      stopAutoPlay();
+    }
+  }
+
+  function startAutoPlay() {
+    autoPlayInterval = setInterval(nextSlide, 5000); 
+    }
+
+  function stopAutoPlay() {
+    clearInterval(autoPlayInterval);
+  }
+  startAutoPlay();
+</script>
+
+</body>
+</html>
